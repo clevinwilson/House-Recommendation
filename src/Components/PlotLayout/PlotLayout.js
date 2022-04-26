@@ -4,7 +4,7 @@ import './PlotLayout.css';
 function PlotLayout() {
   const [card, setCard] = useState(false)
   let plot={}
-  let services = { "House": '1', "Restaurant": "2", "Gym": "3","Hospital":"4"};
+  let services = ["House", "Restaurant", "Gym","Hospital"];
   let App = () => {
     return (<table cellspacing="15" className='layout table-bordered'>
       {
@@ -67,15 +67,21 @@ function PlotLayout() {
      
       <div className={card ? "card-display modal fade show" : "modal fade show card-hide"} id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-modal="true"  >
         <div className="modal-dialog modal-dialog-centered" role="document">
-          <div className="modal-content">
+          <div className="modal-content" style={{borderRadius:"20px"}}>
             <div className="modal-header">
-              <h5 className="modal-title" id="exampleModalLongTitle">Modal title</h5>
+              <h5 className="modal-title" id="exampleModalLongTitle">Select Services</h5>
               <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true" onClick={() => { setCard(!card) }}>&times;</span>
               </button>
             </div>
             <div className="modal-body">
-              ...
+            {
+              services.map((value)=>{
+               return(
+                 <h4 className='services-list'>{value}</h4>
+               )
+              })
+            }
             </div>
             {/* <div classNameName="modal-footer">
               <button type="button" classNameName="btn btn-secondary" data-dismiss="modal">Close</button>

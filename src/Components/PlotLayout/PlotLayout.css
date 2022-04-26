@@ -27,9 +27,18 @@
     width: 110px;
 }
 
-.card-display{
-    display:block !important;
+.card-display {
+    display: block !important;
 }
-.card-hide{
-    display:none !important
+
+.card-hide {
+    display: none !important
+}
+
+.services-list {
+    background: #e7f0f6;
+    border-radius: 20px;
+    text-align: center;
+    padding: 8px;
+    font-size: 22px;
 }
