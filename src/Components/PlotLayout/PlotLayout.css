@@ -1,3 +1,28 @@
 .layout-container {
     background: rgb(43 51 69)
 }
+
+.plot-container {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.plot-layout-box {
+    overflow-y: auto;
+}
+
+.layout {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.layout-header {
+    text-align: center;
+    padding: 20px;
+}
+
+.table-cell {
+    height: 56px;
+    width: 110px;
+}
