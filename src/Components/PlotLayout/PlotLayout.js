@@ -5,7 +5,6 @@ function PlotLayout() {
   const [card, setCard] = useState(false)
   let plot={}
   let services = { "House": '1', "Restaurant": "2", "Gym": "3","Hospital":"4"};
-  
   let App = () => {
     return (<table cellspacing="15" className='layout table-bordered'>
       {
@@ -33,7 +32,7 @@ function PlotLayout() {
         <div className='container'>
           <div className='row'>
             <div className='col-md-12'>
-              <h3 className='text-white layout-header'>House Recommendation</h3>
+              <h3 className='text-white layout-header'>House Recommendation </h3>
             </div>
           </div>
         </div>
@@ -66,13 +65,13 @@ function PlotLayout() {
         </div>
       </div>
      
-      <div className="modal fade show" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-modal="true" style={{display:"block"}}>
+      <div className={card ? "card-display modal fade show" : "modal fade show card-hide"} id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-modal="true"  >
         <div className="modal-dialog modal-dialog-centered" role="document">
           <div className="modal-content">
             <div className="modal-header">
               <h5 className="modal-title" id="exampleModalLongTitle">Modal title</h5>
               <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
+                <span aria-hidden="true" onClick={() => { setCard(!card) }}>&times;</span>
               </button>
             </div>
             <div className="modal-body">
