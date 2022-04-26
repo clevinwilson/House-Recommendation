@@ -1,0 +1,71 @@
+.index-form {
+    background-color: #e7f0f6;
+    padding: 20px;
+    border-radius: 20px;
+}
+
+.index-form-outer {
+    background: rgb(43 51 69) !important;
+    position: absolute !important;
+    top: 0px !important;
+    right: 0px !important;
+    bottom: 0px !important;
+    left: 0px;
+}
+
+.index-submit-btn {
+    background-color: #c4e7ff !important;
+    border-color: #c4e7ff !important;
+    color: #112f40 !important;
+    border-radius: 20px !important;
+}
+
+
+
+
+
+
+
+.indexParentDiv {
+    width: max-content;
+    background-color: #e7f0f6;
+    padding: 10px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 20px;
+    padding: 30px;
+    text-align: center;
+}
+
+.index-from-input {
+    border-top-color: transparent !important;
+    border-left-color: transparent !important;
+    border-right-color: transparent !important;
+    outline-color: transparent !important;
+    border-radius: 18px !important;
+}
+
+.indexParentDiv button {
+
+
+    background-color: #c4e7ff !important;
+    border-color: #c4e7ff !important;
+    color: #112f40 !important;
+    border-radius: 20px !important;
+    width: 113px;
+    height: 42px;
+}
+
+.indexParentDiv button:hover {
+    background-color: white;
+    color: #002f34;
+
+}
+
+.indexParentDiv a {
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+}
