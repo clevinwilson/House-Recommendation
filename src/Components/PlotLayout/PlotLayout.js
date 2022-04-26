@@ -2,21 +2,35 @@ import React from 'react'
 import './PlotLayout.css'
 
 function PlotLayout() {
+  let plot={}
+  // for(let i=0;i<6;i++){
+  //   for(let j=0;j<5;j++){
+  //     console.log(i,j);
+     
+  //   }
+  // }
+  
+
   let App = () => {
     return (<table cellspacing="15" className='layout table-bordered'>
       {
         Array.from(Array(6), (e, i) => {
-          return (<tr className='text-white' key={i}>
+          return (<tr className='text-white' id={i} key={i}>
             {
-              Array.from(Array(5), (e, i) => {
-                return (<td className='p-2 table-cell ' key={i}>hsfdddd</td>)
+              Array.from(Array(5), (a, j) => {
+
+                plot[i + "" + j]={'row':i,"column":j,plot:{}}
+                
+                return (<td className='p-2 table-cell ' onClick={()=>{console.log(i,j);}} id={`${i}${j}` } key={j}> <h2  className='text-center'>+</h2> </td>)
               })
             }
           </tr>)
         })
       }
     </table>)
+    
   }
+  console.log(plot);
 
 
   return (
