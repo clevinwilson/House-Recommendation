@@ -1,21 +1,25 @@
 import React,{useEffect,useState} from 'react'
 import './PlotLayout.css';
+import { useLocation } from 'react-router-dom';
 
 function PlotLayout() {
-  const [card, setCard] = useState(false)
-  let plot={}
+  const location = useLocation();
+  const [card, setCard] = useState(false);
+  const [addServices, setAddServices]=useState({});
+  const [plot,setPlot]=useState([])
+  let plots={}
   let services = ["House", "Restaurant", "Gym","Hospital"];
   let App = () => {
     return (<table cellspacing="15" className='layout table-bordered'>
       {
-        Array.from(Array(6), (e, i) => {
+        Array.from(Array(parseFloat(location.state.row)), (e, i) => {
           return (<tr className='text-white' id={i} key={i}>
             {
-              Array.from(Array(5), (a, j) => {
+              Array.from(Array(parseFloat(location.state.col)), (a, j) => {
 
-                plot[i + "" + j]={'row':i,"column":j,plot:{}}
+                plots[i + "" + j]={'row':i,"column":j,plot:{}}
 
-                return (<td className='p-2 table-cell ' onClick={()=>{setCard(!card); console.log(i,j)}} id={`${i}${j}` } key={j}> <h2  className='text-center'>+</h2> </td>)
+                return (<td className='p-2 table-cell ' onClick={() => { setCard(!card); console.log(location.state.col)}} id={`${i}${j}` } key={j}> <h2  className='text-center'>+</h2> </td>)
               })
             }
           </tr>)
@@ -24,7 +28,6 @@ function PlotLayout() {
     </table>)
     
   }
-
   return (
     <div className='layout-container'>
       <section>
@@ -60,6 +63,28 @@ function PlotLayout() {
           <div className='col-md-12 plot-layout-box'>
             <div className='plot-container p-3'>
               <App />
+              <table>
+              {/* {
+                location.state.plots.map((obj)=>{
+                  return(
+                    
+                    
+                       <tbody>
+                      {obj.col == location.state.col ?
+
+                        <tr>{obj.id}</tr>
+
+                        :
+                        <td>{obj.id}</td>}
+                       </tbody>
+                    
+                   
+                    
+                  )
+                })
+              } */}
+              </table>
+              
             </div>
           </div>
         </div>
@@ -83,10 +108,10 @@ function PlotLayout() {
               })
             }
             </div>
-            {/* <div classNameName="modal-footer">
-              <button type="button" classNameName="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="button" className="btn btn-primary">Save changes</button>
-            </div> */}
+            <div style={{textAlign:"center"}} classNameName="modal-footer">
+              
+              <button onClick={() => { setCard(!card) }} style={{ backgroundColor: "#5583a2", borderRadius: "7px" }} type="button" className="mb-3 btn btn-primary ">OK</button>
+            </div>
           </div>
         </div>
       </div>
