@@ -19,7 +19,26 @@ function PlotLayout() {
 
                 plots[i + "" + j]={'row':i,"column":j,plot:{}}
 
-                return (<td className='p-2 table-cell ' onClick={() => { setCard(!card); console.log(location.state.col)}} id={`${i}${j}` } key={j}> <h2  className='text-center'>+</h2> </td>)
+                return (<td className='p-2 table-cell ' onClick={() => { setCard(!card); setPlot(location.state.plots) }} id={`${i}${j}`} key={j}> <h2 className='text-center'>+</h2> 
+                {
+                    location.state.plots.map((obj) => {
+                      return(
+                       <div>
+                          {obj.id == i + "" + j?
+                           <div className='row'>
+                             {obj.services.house >=1? <h6 className='text-success col-6'>H: {obj.services.house}</h6>:null}
+                              {obj.services.restaurant >=1 ? <h6 className='text-warning col-6'>R: {obj.services.restaurant}</h6>:null}
+                              {obj.services.gym >=1 ? <h6 className='text-info col-6'>G: {obj.services.gym}</h6> :null}
+                              {obj.services.hospital >=1 ? <h6 className='text-danger col-6'>Ho: {obj.services.hospital}</h6>:null}
+                           </div>
+                          :
+                          null
+                         }
+                       </div>
+                      )
+                    })
+                }
+                 </td>)
               })
             }
           </tr>)
@@ -63,6 +82,7 @@ function PlotLayout() {
           <div className='col-md-12 plot-layout-box'>
             <div className='plot-container p-3'>
               <App />
+              
               <table>
               {/* {
                 location.state.plots.map((obj)=>{
