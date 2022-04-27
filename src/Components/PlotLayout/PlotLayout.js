@@ -81,7 +81,7 @@ function PlotLayout() {
       </section>
       <div className='container mt-5'>
         <div className='row mt-5'>
-          <div className='col-md-12 plot-layout-box'>
+          <div style={{textAlign:'center'}} className='col-md-12 plot-layout-box'>
             <div className='plot-container p-3'>
               <App />
 
@@ -106,9 +106,11 @@ function PlotLayout() {
                 })
               } */}
               </table>
-
+              
             </div>
+            <button className='btn btn-success find-btn mt-5'>Find best house</button>
           </div>
+          
         </div>
       </div>
 
@@ -178,6 +180,7 @@ function PlotLayout() {
           </div>
         </div>
       </div>
+     
     </div>
   )
 }

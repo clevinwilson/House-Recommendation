@@ -41,4 +41,16 @@
     text-align: center;
     padding: 8px;
     font-size: 22px;
+    cursor: pointer;
+}
+
+.services-list:hover {
+    background-color: #c4dae9;
+}
+
+.find-btn {
+    background-color: #c4e7ff !important;
+    border-color: #c4e7ff !important;
+    color: #112f40 !important;
+    border-radius: 10px !important;
 }
