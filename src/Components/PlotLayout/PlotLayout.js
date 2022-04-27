@@ -7,7 +7,8 @@ function PlotLayout() {
   const [card, setCard] = useState(false);
   const [addServices, setAddServices] = useState({});
   const [plot, setPlot] = useState([]);
-  const [servicesId, seteSrvicesId]=useState('')
+  const [servicesId, seteSrvicesId] = useState('');
+  const [houseCount, setHouseCount] = useState(1);
   let plots = {}
   let services = ["House", "Restaurant", "Gym", "Hospital"];
   let App = () => {
@@ -20,14 +21,14 @@ function PlotLayout() {
 
                 plots[i + "" + j] = { 'row': i, "column": j, plot: {} }
 
-                return (<td className='p-2 table-cell ' onClick={() => { setCard(!card); setPlot(location.state.plots); seteSrvicesId(i + "" + j) }} id={`${i}${j}`} key={j}> <h2 className='text-center'>+</h2>
+                return (<td className='p-2 table-cell ' onClick={() => { setCard(!card); setPlot(location.state.plots); seteSrvicesId(i + "" + j) }} id={`${i}${j}`} key={j}>
                   {
                     location.state.plots.map((obj) => {
                       return (
                         <div>
                           {obj.id == i + "" + j ?
                             <div className='row'>
-                              {obj.services.house >= 0 ? <h6 className='text-success col-6'>H: {obj.services.house}</h6> : null}
+                              {obj.services.house >= 1 ? <h6 className='text-success col-6'>H {obj.services.house}</h6> : null}
                               {obj.services.restaurant >= 1 ? <h6 className='text-warning col-6'>R: {obj.services.restaurant}</h6> : null}
                               {obj.services.gym >= 1 ? <h6 className='text-info col-6'>G: {obj.services.gym}</h6> : null}
                               {obj.services.hospital >= 1 ? <h6 className='text-danger col-6'>Ho: {obj.services.hospital}</h6> : null}
@@ -121,67 +122,54 @@ function PlotLayout() {
               </button>
             </div>
             <div className="modal-body">
-              {/* {
-                services.map((value) => {
-                  return (
-                    <h4 className='services-list'><input
-                      onChange={() => {
-                        setPlot(location.state.plots.filter((obj) => {
-                          if (obj.id == 10) {
-                            obj.house = 1
-                          }
-                          return (obj)
-                        }))
-                      }}
-                      type="checkbox" value={value}></input> {value}</h4>
-                  )
-                })
-              } */}
-              <h4 className='services-list'><input
-                onChange={() => {
-                  setPlot(location.state.plots.filter((obj) => {
-                    if (obj.id == servicesId) {
-                      obj.services.house = 1
-                    }
-                    return (obj)
-                  }))
-                  console.log(location.state.plots);
-                }}
-                type="checkbox" ></input> House</h4>
-                
+              
+              <h4 className='services-list' 
+              onClick={() => {
+                setPlot(location.state.plots.filter((obj) => {
+                  if (obj.id == servicesId) {
 
-              {/* <h4 className='services-list'><input
-                onChange={() => {
-                  setPlot(location.state.plots.filter((obj) => {
-                    if (obj.id == 10) {
-                      obj.house = 1
+                    if (obj.services.house >= 1) {
+                      return
                     }
-                    return (obj)
-                  }))
-                }}
-                type="checkbox" ></input> Restaurant</h4>
+                    setHouseCount(houseCount + 1)
+                    obj.services.house = houseCount
 
-              <h4 className='services-list'><input
-                onChange={() => {
-                  setPlot(location.state.plots.filter((obj) => {
-                    if (obj.id == 10) {
-                      obj.house = 1
-                    }
-                    return (obj)
-                  }))
-                }}
-                type="checkbox"></input> Gym</h4>
+                  }
+                  return (obj)
+                }))
+                console.log(location.state.plots);
+              }}> House</h4>
 
-              <h4 className='services-list'><input
-                onChange={() => {
-                  setPlot(location.state.plots.filter((obj) => {
-                    if (obj.id == 10) {
-                      obj.house = 1
-                    }
-                    return (obj)
-                  }))
-                }}
-                type="checkbox" ></input> Hospital</h4> */}
+
+              <h4 className='services-list' 
+              onClick={() => {
+                setPlot(location.state.plots.filter((obj) => {
+                  if (obj.id == servicesId) {
+                    obj.services.restaurant = obj.services.restaurant + 1
+                  }
+                  return (obj)
+                }))
+              }}> Restaurant</h4>
+
+              <h4 className='services-list' 
+              onClick={() => {
+                setPlot(location.state.plots.filter((obj) => {
+                  if (obj.id == servicesId) {
+                    obj.services.gym = obj.services.gym + 1
+                  }
+                  return (obj)
+                }))
+              }}>  Gym</h4>
+
+              <h4 className='services-list' 
+              onClick={() => {
+                setPlot(location.state.plots.filter((obj) => {
+                  if (obj.id == servicesId) {
+                    obj.services.hospital = obj.services.hospital + 1
+                  }
+                  return (obj)
+                }))
+              }}> Hospital</h4>
             </div>
             <div style={{ textAlign: "center" }} classNameName="modal-footer">
 
