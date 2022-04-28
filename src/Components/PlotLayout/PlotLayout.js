@@ -61,6 +61,36 @@ function PlotLayout() {
           </div>
         </div>
       </section>
+      <div className='container'>
+        <div className='preferences-title text-center'>
+          <h3 className='text-white'>Preferences</h3>
+        </div>
+        <div className='row text-center mt-5'>
+
+          
+
+            
+            <div className="form-check col-6 col-md-3">
+                <input className="form-check-input" type="checkbox" value="" id="house" />
+              <label className="form-check-label text-white" for="house ">House </label>
+              </div>
+
+          <div className="form-check  col-6 col-md-3">
+                <input className="form-check-input" type="checkbox" value="" id="restaurant" />
+              <label className="form-check-label text-white" for="restaurant ">Restaurant </label>
+              </div>
+
+          <div className="form-check col-6 col-md-3">
+                <input className="form-check-input" type="checkbox" value="" id="gym" />
+              <label className="form-check-label text-white" for="gym ">Gym </label>
+              </div>
+
+          <div className="form-check col-6 col-md-3">
+                <input className="form-check-input" type="checkbox" value="" id="hospital" />
+              <label className="form-check-label text-white" for="hospital ">Hospital </label>
+              </div>
+            </div>
+      </div>
       <section>
         <div className='container'>
           <div className='row mt-5 m-3'>
@@ -81,7 +111,7 @@ function PlotLayout() {
       </section>
       <div className='container mt-5'>
         <div className='row mt-5'>
-          <div style={{textAlign:'center'}} className='col-md-12 plot-layout-box'>
+          <div style={{ textAlign: 'center' }} className='col-md-12 plot-layout-box'>
             <div className='plot-container p-3'>
               <App />
 
@@ -106,11 +136,11 @@ function PlotLayout() {
                 })
               } */}
               </table>
-              
+
             </div>
             <button className='btn btn-success find-btn mt-5'>Find best house</button>
           </div>
-          
+
         </div>
       </div>
 
@@ -124,54 +154,54 @@ function PlotLayout() {
               </button>
             </div>
             <div className="modal-body">
-              
-              <h4 className='services-list' 
-              onClick={() => {
-                setPlot(location.state.plots.filter((obj) => {
-                  if (obj.id == servicesId) {
 
-                    if (obj.services.house >= 1) {
-                      return
+              <h4 className='services-list'
+                onClick={() => {
+                  setPlot(location.state.plots.filter((obj) => {
+                    if (obj.id == servicesId) {
+
+                      if (obj.services.house >= 1) {
+                        return
+                      }
+                      setHouseCount(houseCount + 1)
+                      obj.services.house = houseCount
+
                     }
-                    setHouseCount(houseCount + 1)
-                    obj.services.house = houseCount
-
-                  }
-                  return (obj)
-                }))
-                console.log(location.state.plots);
-              }}> House</h4>
+                    return (obj)
+                  }))
+                  console.log(location.state.plots);
+                }}> House</h4>
 
 
-              <h4 className='services-list' 
-              onClick={() => {
-                setPlot(location.state.plots.filter((obj) => {
-                  if (obj.id == servicesId) {
-                    obj.services.restaurant = obj.services.restaurant + 1
-                  }
-                  return (obj)
-                }))
-              }}> Restaurant</h4>
+              <h4 className='services-list'
+                onClick={() => {
+                  setPlot(location.state.plots.filter((obj) => {
+                    if (obj.id == servicesId) {
+                      obj.services.restaurant = obj.services.restaurant + 1
+                    }
+                    return (obj)
+                  }))
+                }}> Restaurant</h4>
 
-              <h4 className='services-list' 
-              onClick={() => {
-                setPlot(location.state.plots.filter((obj) => {
-                  if (obj.id == servicesId) {
-                    obj.services.gym = obj.services.gym + 1
-                  }
-                  return (obj)
-                }))
-              }}>  Gym</h4>
+              <h4 className='services-list'
+                onClick={() => {
+                  setPlot(location.state.plots.filter((obj) => {
+                    if (obj.id == servicesId) {
+                      obj.services.gym = obj.services.gym + 1
+                    }
+                    return (obj)
+                  }))
+                }}>  Gym</h4>
 
-              <h4 className='services-list' 
-              onClick={() => {
-                setPlot(location.state.plots.filter((obj) => {
-                  if (obj.id == servicesId) {
-                    obj.services.hospital = obj.services.hospital + 1
-                  }
-                  return (obj)
-                }))
-              }}> Hospital</h4>
+              <h4 className='services-list'
+                onClick={() => {
+                  setPlot(location.state.plots.filter((obj) => {
+                    if (obj.id == servicesId) {
+                      obj.services.hospital = obj.services.hospital + 1
+                    }
+                    return (obj)
+                  }))
+                }}> Hospital</h4>
             </div>
             <div style={{ textAlign: "center" }} classNameName="modal-footer">
 
@@ -180,7 +210,7 @@ function PlotLayout() {
           </div>
         </div>
       </div>
-     
+
     </div>
   )
 }
