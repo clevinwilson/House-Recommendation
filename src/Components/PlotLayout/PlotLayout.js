@@ -5,7 +5,7 @@ import { useLocation } from 'react-router-dom';
 function PlotLayout() {
   const location = useLocation();
   const [card, setCard] = useState(false);
-  const [addServices, setAddServices] = useState({});
+  const [selectedHouse, setSelectedHouse] = useState(false);
   const [plot, setPlot] = useState([]);
   const [servicesId, seteSrvicesId] = useState('');
   const [houseCount, setHouseCount] = useState(1);
@@ -74,14 +74,14 @@ function PlotLayout() {
                 } else {
                   setDistance(restaurantDistanceCol);
                   console.log(restaurantDistanceCol);
-                  setPreferredHouse([...preferredHouse, { houseid: houses.houseid, restaurantDistance: restaurantDistanceCol }])
+                  setPreferredHouse([ { houseid: houses.houseid,boxid:houses.id, restaurantDistance: restaurantDistanceCol }])
                 }
                 return (obj)
               })
             } else {
               setDistance(restaurantDistanceCol);
               console.log(restaurantDistanceCol);
-              setPreferredHouse([...preferredHouse, { houseid: houses.houseid, restaurantDistance: restaurantDistanceCol }])
+              setPreferredHouse([{ houseid: houses.houseid, boxid: houses.id, restaurantDistance: restaurantDistanceCol }])
             }
           }
         } else if (houses.col == restaurants.col) {
@@ -96,14 +96,14 @@ function PlotLayout() {
                 } else {
                   setDistance(restaurantDistanceRow);
                   console.log(restaurantDistanceRow);
-                  setPreferredHouse([...preferredHouse, { houseid: houses.houseid, restaurantDistance: restaurantDistanceRow }])
+                  setPreferredHouse([{ houseid: houses.houseid, boxid: houses.id, restaurantDistance: restaurantDistanceRow }])
                 }
                 return (obj)
               })
             } else {
               setDistance(restaurantDistanceRow);
               console.log(restaurantDistanceRow);
-              setPreferredHouse([...preferredHouse, { houseid: houses.houseid, restaurantDistance: restaurantDistanceRow }])
+              setPreferredHouse([{ houseid: houses.houseid, boxid: houses.id, restaurantDistance: restaurantDistanceRow }])
             }
           }
         }else{
@@ -120,19 +120,25 @@ function PlotLayout() {
                 } else {
                   setDistance(restaurantDistanceCol + restaurantDistanceRow);
                   console.log(restaurantDistanceCol + restaurantDistanceRow);
-                  setPreferredHouse([...preferredHouse, { houseid: houses.houseid, restaurantDistance: restaurantDistanceCol + restaurantDistanceRow }])
+                  setPreferredHouse([{ houseid: houses.houseid, boxid: houses.id, restaurantDistance: restaurantDistanceCol + restaurantDistanceRow }])
                 }
                 return (obj)
               })
             } else {
               setDistance(restaurantDistanceCol + restaurantDistanceRow);
               console.log(restaurantDistanceCol + restaurantDistanceRow);
-              setPreferredHouse([...preferredHouse, { houseid: houses.houseid, restaurantDistance: restaurantDistanceCol + restaurantDistanceRow }])
+              setPreferredHouse([{ houseid: houses.houseid, boxid: houses.id, restaurantDistance: restaurantDistanceCol + restaurantDistanceRow }])
             }
           }
         }
       })
     });
+
+    
+    const activeBox = document.getElementById(preferredHouse[0].boxid);
+    activeBox.style.borderColor ="#7af5ff";
+    activeBox.style.borderWidth ="medium";
+    activeBox.style.boxShadow =" 0px 0px 14px #7af4fe";
 
   }
   return (
