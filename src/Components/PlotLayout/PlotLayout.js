@@ -9,10 +9,13 @@ function PlotLayout() {
   const [plot, setPlot] = useState([]);
   const [servicesId, seteSrvicesId] = useState('');
   const [houseCount, setHouseCount] = useState(1);
-  const [house,setHouse]=useState([]);
-  const [restaurant, setRestaurant]=useState([]);
-  const [gym, setGym]=useState([]);
-  const [hospital, setHospital]=useState([]);
+  const [house, setHouse] = useState([]);
+  const [restaurant, setRestaurant] = useState([]);
+  const [gym, setGym] = useState([]);
+  const [hospital, setHospital] = useState([]);
+  const [distance, setDistance] = useState(1000)
+  const [preferredHouse, setPreferredHouse] = useState([]);
+
   let plots = {}
   let services = ["House", "Restaurant", "Gym", "Hospital"];
   let App = () => {
@@ -53,6 +56,85 @@ function PlotLayout() {
     </table>)
 
   }
+
+  const findBestHouse = () => {
+
+
+    house.forEach(houses => {
+      restaurant.forEach(restaurants => {
+        if (houses.row == restaurants.row) {
+          let restaurantDistanceCol = Math.abs(restaurants.col - houses.col);
+          if (restaurantDistanceCol < distance) {
+            if (preferredHouse[0]) {
+              preferredHouse.filter((obj) => {
+                if (obj.houseid == houses.houseid) {
+                  setDistance(restaurantDistanceCol);
+                  console.log(restaurantDistanceCol);
+                  obj.restaurantDistance = restaurantDistanceCol
+                } else {
+                  setDistance(restaurantDistanceCol);
+                  console.log(restaurantDistanceCol);
+                  setPreferredHouse([...preferredHouse, { houseid: houses.houseid, restaurantDistance: restaurantDistanceCol }])
+                }
+                return (obj)
+              })
+            } else {
+              setDistance(restaurantDistanceCol);
+              console.log(restaurantDistanceCol);
+              setPreferredHouse([...preferredHouse, { houseid: houses.houseid, restaurantDistance: restaurantDistanceCol }])
+            }
+          }
+        } else if (houses.col == restaurants.col) {
+          let restaurantDistanceRow = Math.abs(restaurants.row - houses.row);
+          if (restaurantDistanceRow < distance) {
+            if (preferredHouse[0]) {
+              preferredHouse.filter((obj) => {
+                if (obj.houseid == houses.houseid) {
+                  setDistance(restaurantDistanceRow);
+                  console.log(restaurantDistanceRow);
+                  obj.restaurantDistance = restaurantDistanceRow
+                } else {
+                  setDistance(restaurantDistanceRow);
+                  console.log(restaurantDistanceRow);
+                  setPreferredHouse([...preferredHouse, { houseid: houses.houseid, restaurantDistance: restaurantDistanceRow }])
+                }
+                return (obj)
+              })
+            } else {
+              setDistance(restaurantDistanceRow);
+              console.log(restaurantDistanceRow);
+              setPreferredHouse([...preferredHouse, { houseid: houses.houseid, restaurantDistance: restaurantDistanceRow }])
+            }
+          }
+        }else{
+          let restaurantDistanceCol = Math.abs(restaurants.col - houses.col);
+          let restaurantDistanceRow = Math.abs(restaurants.row - houses.row);
+          console.log(restaurantDistanceCol + restaurantDistanceRow);
+          if (restaurantDistanceCol + restaurantDistanceRow < distance) {
+            if (preferredHouse[0]) {
+              preferredHouse.filter((obj) => {
+                if (obj.houseid == houses.houseid) {
+                  setDistance(restaurantDistanceCol + restaurantDistanceRow);
+                  console.log(restaurantDistanceCol + restaurantDistanceRow);
+                  obj.restaurantDistance = restaurantDistanceCol + restaurantDistanceRow
+                } else {
+                  setDistance(restaurantDistanceCol + restaurantDistanceRow);
+                  console.log(restaurantDistanceCol + restaurantDistanceRow);
+                  setPreferredHouse([...preferredHouse, { houseid: houses.houseid, restaurantDistance: restaurantDistanceCol + restaurantDistanceRow }])
+                }
+                return (obj)
+              })
+            } else {
+              setDistance(restaurantDistanceCol + restaurantDistanceRow);
+              console.log(restaurantDistanceCol + restaurantDistanceRow);
+              setPreferredHouse([...preferredHouse, { houseid: houses.houseid, restaurantDistance: restaurantDistanceCol + restaurantDistanceRow }])
+            }
+          }
+        }
+      })
+    });
+
+  }
   return (
     <div className='layout-container'>
       <section>
@@ -60,7 +142,7 @@ function PlotLayout() {
         <div className='container'>
           <div className='row'>
             <div className='col-md-12'>
-              <h3 style={{ fontSize: "3.6vmin" }} className='text-white layout-header'>House Recommendation </h3>
+              <h3 style={{ fontSize: "3.6vmin" }} className='text-white layout-header'> House Recommendation </h3>
             </div>
           </div>
         </div>
@@ -138,7 +220,8 @@ function PlotLayout() {
               </table> */}
 
             </div>
-            <button onClick={()=>{console.log(house);}} className='btn btn-success find-btn mt-5'>Find best house</button>
+            <button onClick={findBestHouse} className='btn btn-success find-btn mt-5'>Find best house</button>
+            <button onClick={() => { console.log(preferredHouse); }} >okkkk</button>
           </div>
 
         </div>
@@ -165,11 +248,12 @@ function PlotLayout() {
                       }
                       setHouseCount(houseCount + 1)
                       obj.services.house = houseCount
-                      setHouse([...house,obj])
+                      obj.houseid = "h" + houseCount
+                      setHouse([...house, obj])
                     }
                     return (obj)
                   }))
-                  // console.log(location.state.plots);
+                  console.log(location.state.plots);
                 }}> House</h4>
 
 
@@ -189,7 +273,7 @@ function PlotLayout() {
                   setPlot(location.state.plots.filter((obj) => {
                     if (obj.id == servicesId) {
                       obj.services.gym = obj.services.gym + 1;
-                      setGym([...gym,obj])
+                      setGym([...gym, obj])
                     }
                     return (obj)
                   }))
@@ -200,7 +284,7 @@ function PlotLayout() {
                   setPlot(location.state.plots.filter((obj) => {
                     if (obj.id == servicesId) {
                       obj.services.hospital = obj.services.hospital + 1
-                      setHospital([...hospital,obj])
+                      setHospital([...hospital, obj])
                     }
                     return (obj)
                   }))
