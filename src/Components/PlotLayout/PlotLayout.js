@@ -230,9 +230,18 @@ function PlotLayout() {
               </table> */}
 
             </div>
-            <button onClick={findBestHouse} className='btn btn-success find-btn m-5'>Calculate</button>
-            <button onClick={activeBox} className='btn btn-success find-btn m-5'>Find best house</button>
-            <button onClick={() => { console.log(preferredHouse); }} >okkkk</button>
+            <div className='container mt-5'>
+              <div className='row mt-3'>
+                <div className='col-6'>
+                  <button onClick={findBestHouse} className='btn btn-success find-btn ' >Calculate</button>
+                  
+                </div>
+                <div className='col-6'>
+                  <button onClick={activeBox} className='btn btn-success find-btn '>Find best house</button>
+                </div>
+              </div>
+            </div>
+          
           </div>
 
         </div>
