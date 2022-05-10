@@ -56,6 +56,14 @@ function PlotLayout() {
     </table>)
 
   }
+ 
+  const activeBox = () => {
+    const activeBox = document.getElementById(preferredHouse[0].boxid);
+    activeBox.style.borderColor = "#7af5ff";
+    activeBox.style.borderWidth = "medium";
+    activeBox.style.boxShadow = " 0px 0px 14px #7af4fe";
+  }
+
 
   const findBestHouse = () => {
 
@@ -74,7 +82,7 @@ function PlotLayout() {
                 } else {
                   setDistance(restaurantDistanceCol);
                   console.log(restaurantDistanceCol);
-                  setPreferredHouse([ { houseid: houses.houseid,boxid:houses.id, restaurantDistance: restaurantDistanceCol }])
+                  setPreferredHouse([{ houseid: houses.houseid, boxid: houses.id, restaurantDistance: restaurantDistanceCol }])
                 }
                 return (obj)
               })
@@ -106,7 +114,7 @@ function PlotLayout() {
               setPreferredHouse([{ houseid: houses.houseid, boxid: houses.id, restaurantDistance: restaurantDistanceRow }])
             }
           }
-        }else{
+        } else {
           let restaurantDistanceCol = Math.abs(restaurants.col - houses.col);
           let restaurantDistanceRow = Math.abs(restaurants.row - houses.row);
           console.log(restaurantDistanceCol + restaurantDistanceRow);
@@ -134,13 +142,9 @@ function PlotLayout() {
       })
     });
 
-    
-    const activeBox = document.getElementById(preferredHouse[0].boxid);
-    activeBox.style.borderColor ="#7af5ff";
-    activeBox.style.borderWidth ="medium";
-    activeBox.style.boxShadow =" 0px 0px 14px #7af4fe";
-
   }
+
+
   return (
     <div className='layout-container'>
       <section>
@@ -226,7 +230,8 @@ function PlotLayout() {
               </table> */}
 
             </div>
-            <button onClick={findBestHouse} className='btn btn-success find-btn mt-5'>Find best house</button>
+            <button onClick={findBestHouse} className='btn btn-success find-btn m-5'>Calculate</button>
+            <button onClick={activeBox} className='btn btn-success find-btn m-5'>Find best house</button>
             <button onClick={() => { console.log(preferredHouse); }} >okkkk</button>
           </div>
 
