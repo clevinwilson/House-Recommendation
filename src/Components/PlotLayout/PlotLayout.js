@@ -28,10 +28,10 @@ function PlotLayout() {
                         <div>
                           {obj.id == i + "" + j ?
                             <div className='row'>
-                              {obj.services.house >= 1 ? <h6 className='text-success col-6'>H {obj.services.house}</h6> : null}
-                              {obj.services.restaurant >= 1 ? <h6 className='text-warning col-6'>R: {obj.services.restaurant}</h6> : null}
-                              {obj.services.gym >= 1 ? <h6 className='text-info col-6'>G: {obj.services.gym}</h6> : null}
-                              {obj.services.hospital >= 1 ? <h6 className='text-danger col-6'>Ho: {obj.services.hospital}</h6> : null}
+                              {obj.services.house >= 1 ? <h6 className='service-text text-success col-6'>H {obj.services.house}</h6> : null}
+                              {obj.services.restaurant >= 1 ? <h6 className='service-text text-warning col-6'>R: {obj.services.restaurant}</h6> : null}
+                              {obj.services.gym >= 1 ? <h6 className='service-text text-info col-6'>G: {obj.services.gym}</h6> : null}
+                              {obj.services.hospital >= 1 ? <h6 className='service-text text-danger col-6'>Ho: {obj.services.hospital}</h6> : null}
                             </div>
                             :
                             null
@@ -56,55 +56,51 @@ function PlotLayout() {
         <div className='container'>
           <div className='row'>
             <div className='col-md-12'>
-              <h3 className='text-white layout-header'>House Recommendation </h3>
+              <h3 style={{ fontSize: "3.6vmin" }} className='text-white layout-header'>House Recommendation </h3>
             </div>
           </div>
         </div>
       </section>
       <div className='container'>
         <div className='preferences-title text-center'>
-          <h3 className='text-white'>Preferences</h3>
+          <h3 style={{ fontSize: "3.1vmin" }} className='text-white'>Preferences</h3>
         </div>
-        <div className='row text-center mt-5'>
+        <div style={{ fontSize: "2.2vmin" }} className='row text-center mt-5'>
+          <div className="form-check col-6 mt-2 col-md-3">
+            <input className="form-check-input" type="checkbox" value="" id="house" />
+            <label className="form-check-label text-white" for="house ">House </label>
+          </div>
 
-          
+          <div className="form-check mt-2  col-6 col-md-3">
+            <input className="form-check-input" type="checkbox" value="" id="restaurant" />
+            <label className="form-check-label text-white" for="restaurant ">Restaurant </label>
+          </div>
 
-            
-            <div className="form-check col-6 col-md-3">
-                <input className="form-check-input" type="checkbox" value="" id="house" />
-              <label className="form-check-label text-white" for="house ">House </label>
-              </div>
+          <div className="form-check mt-2 col-6 col-md-3">
+            <input className="form-check-input" type="checkbox" value="" id="gym" />
+            <label className="form-check-label text-white" for="gym ">Gym </label>
+          </div>
 
-          <div className="form-check  col-6 col-md-3">
-                <input className="form-check-input" type="checkbox" value="" id="restaurant" />
-              <label className="form-check-label text-white" for="restaurant ">Restaurant </label>
-              </div>
-
-          <div className="form-check col-6 col-md-3">
-                <input className="form-check-input" type="checkbox" value="" id="gym" />
-              <label className="form-check-label text-white" for="gym ">Gym </label>
-              </div>
-
-          <div className="form-check col-6 col-md-3">
-                <input className="form-check-input" type="checkbox" value="" id="hospital" />
-              <label className="form-check-label text-white" for="hospital ">Hospital </label>
-              </div>
-            </div>
+          <div className="form-check mt-2 col-6 col-md-3">
+            <input className="form-check-input" type="checkbox" value="" id="hospital" />
+            <label className="form-check-label text-white" for="hospital ">Hospital </label>
+          </div>
+        </div>
       </div>
       <section>
         <div className='container'>
           <div className='row mt-5 m-3'>
             <div className=' col-6 col-md-3 text-center'>
-              <h3 className='text-success'>House </h3>
+              <h3 style={{ fontSize: "3vmin" }} className='text-success'>House </h3>
             </div>
             <div className='col-6 col-md-3 text-center'>
-              <h3 className='text-warning'>Restaurant</h3>
+              <h3 style={{ fontSize: "3vmin" }} className='text-warning'>Restaurant</h3>
             </div>
             <div className='col-6 col-md-3 text-center'>
-              <h3 className='text-info' >Gym</h3>
+              <h3 style={{ fontSize: "3vmin" }} className='text-info' >Gym</h3>
             </div>
             <div className='col-6 col-md-3 text-center'>
-              <h3 className='text-danger'>Hospital</h3>
+              <h3 style={{ fontSize: "3vmin" }} className='text-danger'>Hospital</h3>
             </div>
           </div>
         </div>

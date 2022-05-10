@@ -54,3 +54,7 @@
     color: #112f40 !important;
     border-radius: 10px !important;
 }
+
+.service-text {
+    font-size: 2.5vmin;
+}
