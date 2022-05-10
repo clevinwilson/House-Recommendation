@@ -9,6 +9,10 @@ function PlotLayout() {
   const [plot, setPlot] = useState([]);
   const [servicesId, seteSrvicesId] = useState('');
   const [houseCount, setHouseCount] = useState(1);
+  const [house,setHouse]=useState([]);
+  const [restaurant, setRestaurant]=useState([]);
+  const [gym, setGym]=useState([]);
+  const [hospital, setHospital]=useState([]);
   let plots = {}
   let services = ["House", "Restaurant", "Gym", "Hospital"];
   let App = () => {
@@ -111,8 +115,8 @@ function PlotLayout() {
             <div className='plot-container p-3'>
               <App />
 
-              <table>
-                {/* {
+              {/* <table>
+                {
                 location.state.plots.map((obj)=>{
                   return(
                     
@@ -130,11 +134,11 @@ function PlotLayout() {
                     
                   )
                 })
-              } */}
-              </table>
+              }
+              </table> */}
 
             </div>
-            <button className='btn btn-success find-btn mt-5'>Find best house</button>
+            <button onClick={()=>{console.log(house);}} className='btn btn-success find-btn mt-5'>Find best house</button>
           </div>
 
         </div>
@@ -161,11 +165,11 @@ function PlotLayout() {
                       }
                       setHouseCount(houseCount + 1)
                       obj.services.house = houseCount
-
+                      setHouse([...house,obj])
                     }
                     return (obj)
                   }))
-                  console.log(location.state.plots);
+                  // console.log(location.state.plots);
                 }}> House</h4>
 
 
@@ -174,6 +178,7 @@ function PlotLayout() {
                   setPlot(location.state.plots.filter((obj) => {
                     if (obj.id == servicesId) {
                       obj.services.restaurant = obj.services.restaurant + 1
+                      setRestaurant([...restaurant, obj]);
                     }
                     return (obj)
                   }))
@@ -183,7 +188,8 @@ function PlotLayout() {
                 onClick={() => {
                   setPlot(location.state.plots.filter((obj) => {
                     if (obj.id == servicesId) {
-                      obj.services.gym = obj.services.gym + 1
+                      obj.services.gym = obj.services.gym + 1;
+                      setGym([...gym,obj])
                     }
                     return (obj)
                   }))
@@ -194,6 +200,7 @@ function PlotLayout() {
                   setPlot(location.state.plots.filter((obj) => {
                     if (obj.id == servicesId) {
                       obj.services.hospital = obj.services.hospital + 1
+                      setHospital([...hospital,obj])
                     }
                     return (obj)
                   }))
