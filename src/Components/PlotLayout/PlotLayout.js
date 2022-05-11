@@ -19,7 +19,8 @@ function PlotLayout() {
 
   //find house btn
   const [findHouseBtn, setFindHouseBtn] = useState(false)
-  let  service;
+  let service;
+  let [services, setServices] = useState({ restaurant: false, gym: true, hospital: true })
   let plots = {}
   let App = () => {
     return (<table cellspacing="15" className='layout table-bordered'>
@@ -60,7 +61,10 @@ function PlotLayout() {
 
   }
 
+  const [calculateBtn, setCalculateBtn]=useState(false);
+
   const activeBox = () => {
+    console.log(preferredHouse);
     const activeBox = document.getElementById(preferredHouse[0].boxid);
     activeBox.style.borderColor = "#7af5ff";
     activeBox.style.borderWidth = "medium";
@@ -110,31 +114,37 @@ function PlotLayout() {
   const findBestHouse = () => {
     if (house.length !== 0) {
       house.forEach(houses => {
-        restaurant.forEach(restaurants => {
-          if (houses.row === restaurants.row) {
-            selectHouse(Math.abs(restaurants.col - houses.col), preferredHouse, houses, service = 'restaurant' )
-          } else if (houses.col === restaurants.col) {
-            selectHouse(Math.abs(restaurants.row - houses.row), preferredHouse, houses, service = 'restaurant')
-          } else {
-            let restaurantDistanceCol = Math.abs(restaurants.col - houses.col);
-            let restaurantDistanceRow = Math.abs(restaurants.row - houses.row);
-            selectHouse(Math.abs(restaurantDistanceCol + restaurantDistanceRow), preferredHouse, houses, service = 'restaurant')
+        console.log(services.restaurant);
+        if (services.restaurant) {
+          restaurant.forEach(restaurants => {
+            if (houses.row === restaurants.row) {
+              selectHouse(Math.abs(restaurants.col - houses.col), preferredHouse, houses, service = 'restaurant')
+            } else if (houses.col === restaurants.col) {
+              selectHouse(Math.abs(restaurants.row - houses.row), preferredHouse, houses, service = 'restaurant')
+            } else {
+              let restaurantDistanceCol = Math.abs(restaurants.col - houses.col);
+              let restaurantDistanceRow = Math.abs(restaurants.row - houses.row);
+              selectHouse(Math.abs(restaurantDistanceCol + restaurantDistanceRow), preferredHouse, houses, service = 'restaurant')
 
-          }
-        })
+            }
+          })
+        }
 
-        gym.forEach(gyms => {
-          if (houses.row === gyms.row) {
-            selectHouse(Math.abs(gyms.col - gyms.col), preferredHouse, houses, service = 'gym')
-          } else if (houses.col === gyms.col) {
-            selectHouse(Math.abs(gyms.row - houses.row), preferredHouse, houses, service = 'gym')
-          } else {
-            let gymDistanceCol = Math.abs(gyms.col - houses.col);
-            let gymDistanceRow = Math.abs(gyms.row - houses.row);
-            selectHouse(Math.abs(gymDistanceCol + gymDistanceRow), preferredHouse, houses, service = 'gym')
+        if (services.gym) {
+          gym.forEach(gyms => {
+            if (houses.row === gyms.row) {
+              selectHouse(Math.abs(gyms.col - gyms.col), preferredHouse, houses, service = 'gym')
+            } else if (houses.col === gyms.col) {
+              selectHouse(Math.abs(gyms.row - houses.row), preferredHouse, houses, service = 'gym')
+            } else {
+              let gymDistanceCol = Math.abs(gyms.col - houses.col);
+              let gymDistanceRow = Math.abs(gyms.row - houses.row);
+              setDistance(1000)
+              selectHouse(Math.abs(gymDistanceCol + gymDistanceRow), preferredHouse, houses, service = 'gym')
 
-          }
-        })
+            }
+          })
+        }
       });
       setFindHouseBtn(true);
     }
@@ -158,23 +168,30 @@ function PlotLayout() {
           <h3 style={{ fontSize: "3.1vmin" }} className='text-white'>Set Preferences</h3>
         </div>
         <div style={{ fontSize: "2.2vmin" }} className='row text-center mt-5'>
-          <div className="form-check col-6 mt-2 col-md-3">
-            <input className="form-check-input" type="checkbox" value="" id="house" />
-            <label className="form-check-label text-white" for="house ">House </label>
-          </div>
 
-          <div className="form-check mt-2  col-6 col-md-3">
-            <input className="form-check-input" type="checkbox" value="" id="restaurant" />
+
+          <div className="form-check mt-2  col-4 col-md-4">
+            <input className="form-check-input" type="radio" name='services' value="" 
+            onClick={() => {
+              setServices({restaurant : !services.restaurant})
+              setCalculateBtn(true)
+              console.log(services);
+            }} id="restaurant" />
             <label className="form-check-label text-white" for="restaurant ">Restaurant </label>
           </div>
 
-          <div className="form-check mt-2 col-6 col-md-3">
-            <input className="form-check-input" type="checkbox" value="" id="gym" />
+          <div className="form-check mt-2 col-4 col-md-4">
+            <input className="form-check-input" type="radio" name='services' value="" id="gym" 
+            onClick={()=>{
+              setServices({ gym: !services.restaurant })
+              setCalculateBtn(true)
+            }}
+            />
             <label className="form-check-label text-white" for="gym ">Gym </label>
           </div>
 
-          <div className="form-check mt-2 col-6 col-md-3">
-            <input className="form-check-input" type="checkbox" value="" id="hospital" />
+          <div className="form-check mt-2 col-4 col-md-4">
+            <input className="form-check-input" type="radio" name='services' value="" id="hospital" />
             <label className="form-check-label text-white" for="hospital ">Hospital </label>
           </div>
         </div>
@@ -209,7 +226,7 @@ function PlotLayout() {
             <div className='container mt-5'>
               <div className='row mt-3'>
                 <div className='col-6'>
-                  <button style={{ width: '155px' }} onClick={() => { findBestHouse() }} className='btn btn-success find-btn ' >Calculate Distance</button>
+                  {calculateBtn? <button style={{ width: '155px' }} onClick={() => { findBestHouse() }} className='btn btn-success find-btn ' >Calculate Distance</button>:null}
 
                 </div>
                 <div className='col-6'>
