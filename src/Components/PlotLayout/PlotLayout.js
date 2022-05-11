@@ -18,8 +18,8 @@ function PlotLayout() {
   const [preferredHouse, setPreferredHouse] = useState([]);
 
   //find house btn
-  const [findHouseBtn,setFindHouseBtn]=useState(false)
-
+  const [findHouseBtn, setFindHouseBtn] = useState(false)
+  let  service;
   let plots = {}
   let App = () => {
     return (<table cellspacing="15" className='layout table-bordered'>
@@ -67,42 +67,71 @@ function PlotLayout() {
     activeBox.style.boxShadow = " 0px 0px 14px #7af4fe";
   }
 
-  const selectHouse = (restaurantDistanceCol, preferredHouse, houses) => {
-    if (restaurantDistanceCol < distance) {
+  const selectHouse = (DistanceCol, preferredHouse, houses, service) => {
+    if (DistanceCol < distance) {
       if (preferredHouse[0]) {
         preferredHouse.filter((obj) => {
           if (obj.houseid === houses.houseid) {
-            setDistance(restaurantDistanceCol);
-            console.log(restaurantDistanceCol);
-            obj.restaurantDistance = restaurantDistanceCol
+            setDistance(DistanceCol);
+            console.log(DistanceCol);
+            if (service === 'restaurant') {
+              obj.restaurantDistance = DistanceCol
+            } else if (service === 'gym') {
+              console.log('gym');
+              obj.gymDistance = DistanceCol
+            }
           } else {
-            setDistance(restaurantDistanceCol);
-            console.log(restaurantDistanceCol);
-            setPreferredHouse([{ houseid: houses.houseid, boxid: houses.id, restaurantDistance: restaurantDistanceCol }])
+            setDistance(DistanceCol);
+            console.log(DistanceCol);
+            if (service === 'restaurant') {
+              setPreferredHouse([{ houseid: houses.houseid, boxid: houses.id, gymDistance: obj.gymDistance, restaurantDistance: DistanceCol }])
+            } else if (service === 'gym') {
+              console.log('gym');
+              setPreferredHouse([{ houseid: houses.houseid, boxid: houses.id, gymDistance: DistanceCol, restaurantDistance: obj.restaurantDistance }])
+            }
+
           }
           return (obj)
         })
       } else {
-        setDistance(restaurantDistanceCol);
-        console.log(restaurantDistanceCol);
-        setPreferredHouse([{ houseid: houses.houseid, boxid: houses.id, restaurantDistance: restaurantDistanceCol }])
+        setDistance(DistanceCol);
+        console.log(DistanceCol);
+        if (service === 'restaurant') {
+          setPreferredHouse([{ houseid: houses.houseid, boxid: houses.id, restaurantDistance: DistanceCol }])
+        } else if (service === 'gym') {
+          console.log('gym');
+          setPreferredHouse([{ houseid: houses.houseid, boxid: houses.id, gymDistance: DistanceCol }])
+        }
       }
     }
     return
   }
 
   const findBestHouse = () => {
-    if(house.length!==0){
+    if (house.length !== 0) {
       house.forEach(houses => {
         restaurant.forEach(restaurants => {
           if (houses.row === restaurants.row) {
-            selectHouse(Math.abs(restaurants.col - houses.col), preferredHouse, houses)
+            selectHouse(Math.abs(restaurants.col - houses.col), preferredHouse, houses, service = 'restaurant' )
           } else if (houses.col === restaurants.col) {
-            selectHouse(Math.abs(restaurants.row - houses.row), preferredHouse, houses)
+            selectHouse(Math.abs(restaurants.row - houses.row), preferredHouse, houses, service = 'restaurant')
           } else {
             let restaurantDistanceCol = Math.abs(restaurants.col - houses.col);
             let restaurantDistanceRow = Math.abs(restaurants.row - houses.row);
-            selectHouse(Math.abs(restaurantDistanceCol + restaurantDistanceRow), preferredHouse, houses)
+            selectHouse(Math.abs(restaurantDistanceCol + restaurantDistanceRow), preferredHouse, houses, service = 'restaurant')
+
+          }
+        })
+
+        gym.forEach(gyms => {
+          if (houses.row === gyms.row) {
+            selectHouse(Math.abs(gyms.col - gyms.col), preferredHouse, houses, service = 'gym')
+          } else if (houses.col === gyms.col) {
+            selectHouse(Math.abs(gyms.row - houses.row), preferredHouse, houses, service = 'gym')
+          } else {
+            let gymDistanceCol = Math.abs(gyms.col - houses.col);
+            let gymDistanceRow = Math.abs(gyms.row - houses.row);
+            selectHouse(Math.abs(gymDistanceCol + gymDistanceRow), preferredHouse, houses, service = 'gym')
 
           }
         })
@@ -180,11 +209,11 @@ function PlotLayout() {
             <div className='container mt-5'>
               <div className='row mt-3'>
                 <div className='col-6'>
-                  <button style={{ width: '155px' }} onClick={() => {  findBestHouse()}} className='btn btn-success find-btn ' >Calculate Distance</button>
+                  <button style={{ width: '155px' }} onClick={() => { findBestHouse() }} className='btn btn-success find-btn ' >Calculate Distance</button>
 
                 </div>
                 <div className='col-6'>
-                 {findHouseBtn? <button style={{ width: '155px' }} onClick={activeBox} className='btn btn-success find-btn '>Find best house</button>:null}
+                  {findHouseBtn ? <button style={{ width: '155px' }} onClick={activeBox} className='btn btn-success find-btn '>Find best house</button> : null}
                 </div>
               </div>
             </div>
