@@ -92,21 +92,23 @@ function PlotLayout() {
   }
 
   const findBestHouse = () => {
-    house.forEach(houses => {
-      restaurant.forEach(restaurants => {
-        if (houses.row === restaurants.row) {
-          selectHouse(Math.abs(restaurants.col - houses.col),preferredHouse,houses)
-        } else if (houses.col === restaurants.col) {
-          selectHouse(Math.abs(restaurants.row - houses.row), preferredHouse, houses)
-        } else {
-          let restaurantDistanceCol = Math.abs(restaurants.col - houses.col);
-          let restaurantDistanceRow = Math.abs(restaurants.row - houses.row);
-          selectHouse(Math.abs(restaurantDistanceCol + restaurantDistanceRow), preferredHouse, houses)
-          
-        }
-      })
-    });
+    if(house.length!==0){
+      house.forEach(houses => {
+        restaurant.forEach(restaurants => {
+          if (houses.row === restaurants.row) {
+            selectHouse(Math.abs(restaurants.col - houses.col), preferredHouse, houses)
+          } else if (houses.col === restaurants.col) {
+            selectHouse(Math.abs(restaurants.row - houses.row), preferredHouse, houses)
+          } else {
+            let restaurantDistanceCol = Math.abs(restaurants.col - houses.col);
+            let restaurantDistanceRow = Math.abs(restaurants.row - houses.row);
+            selectHouse(Math.abs(restaurantDistanceCol + restaurantDistanceRow), preferredHouse, houses)
 
+          }
+        })
+      });
+      setFindHouseBtn(true);
+    }
   }
 
 
@@ -178,7 +180,7 @@ function PlotLayout() {
             <div className='container mt-5'>
               <div className='row mt-3'>
                 <div className='col-6'>
-                  <button style={{ width: '155px' }} onClick={() => { setFindHouseBtn(true); findBestHouse()}} className='btn btn-success find-btn ' >Calculate Distance</button>
+                  <button style={{ width: '155px' }} onClick={() => {  findBestHouse()}} className='btn btn-success find-btn ' >Calculate Distance</button>
 
                 </div>
                 <div className='col-6'>
