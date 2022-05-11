@@ -1,14 +1,15 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import './PlotLayout.css';
 import { useLocation } from 'react-router-dom';
 
 function PlotLayout() {
   const location = useLocation();
   const [card, setCard] = useState(false);
-  const [selectedHouse, setSelectedHouse] = useState(false);
   const [plot, setPlot] = useState([]);
   const [servicesId, seteSrvicesId] = useState('');
   const [houseCount, setHouseCount] = useState(1);
+
+
   const [house, setHouse] = useState([]);
   const [restaurant, setRestaurant] = useState([]);
   const [gym, setGym] = useState([]);
@@ -16,8 +17,10 @@ function PlotLayout() {
   const [distance, setDistance] = useState(1000)
   const [preferredHouse, setPreferredHouse] = useState([]);
 
+  //find house btn
+  const [findHouseBtn,setFindHouseBtn]=useState(false)
+
   let plots = {}
-  let services = ["House", "Restaurant", "Gym", "Hospital"];
   let App = () => {
     return (<table cellspacing="15" className='layout table-bordered'>
       {
@@ -28,12 +31,12 @@ function PlotLayout() {
 
                 plots[i + "" + j] = { 'row': i, "column": j, plot: {} }
 
-                return (<td className='p-2 table-cell ' onClick={() => { setCard(!card); setPlot(location.state.plots); seteSrvicesId(i + "" + j) }} id={`${i}${j}`} key={j}>
+                return (<td className='p-2 table-cell ' onClick={() => { setFindHouseBtn(false); setCard(!card); setPlot(location.state.plots); seteSrvicesId(i + "" + j) }} id={`${i}${j}`} key={j}>
                   {
                     location.state.plots.map((obj) => {
                       return (
                         <div>
-                          {obj.id == i + "" + j ?
+                          {obj.id === i + "" + j ?
                             <div className='row'>
                               {obj.services.house >= 1 ? <h6 className='service-text text-success col-6'>H {obj.services.house}</h6> : null}
                               {obj.services.restaurant >= 1 ? <h6 className='service-text text-warning col-6'>R: {obj.services.restaurant}</h6> : null}
@@ -68,7 +71,7 @@ function PlotLayout() {
     if (restaurantDistanceCol < distance) {
       if (preferredHouse[0]) {
         preferredHouse.filter((obj) => {
-          if (obj.houseid == houses.houseid) {
+          if (obj.houseid === houses.houseid) {
             setDistance(restaurantDistanceCol);
             console.log(restaurantDistanceCol);
             obj.restaurantDistance = restaurantDistanceCol
@@ -91,9 +94,9 @@ function PlotLayout() {
   const findBestHouse = () => {
     house.forEach(houses => {
       restaurant.forEach(restaurants => {
-        if (houses.row == restaurants.row) {
+        if (houses.row === restaurants.row) {
           selectHouse(Math.abs(restaurants.col - houses.col),preferredHouse,houses)
-        } else if (houses.col == restaurants.col) {
+        } else if (houses.col === restaurants.col) {
           selectHouse(Math.abs(restaurants.row - houses.row), preferredHouse, houses)
         } else {
           let restaurantDistanceCol = Math.abs(restaurants.col - houses.col);
@@ -175,11 +178,11 @@ function PlotLayout() {
             <div className='container mt-5'>
               <div className='row mt-3'>
                 <div className='col-6'>
-                  <button style={{ width: '155px' }} onClick={findBestHouse} className='btn btn-success find-btn ' >Calculate Distance</button>
+                  <button style={{ width: '155px' }} onClick={() => { setFindHouseBtn(true); findBestHouse()}} className='btn btn-success find-btn ' >Calculate Distance</button>
 
                 </div>
                 <div className='col-6'>
-                  <button style={{ width: '155px' }} onClick={activeBox} className='btn btn-success find-btn '>Find best house</button>
+                 {findHouseBtn? <button style={{ width: '155px' }} onClick={activeBox} className='btn btn-success find-btn '>Find best house</button>:null}
                 </div>
               </div>
             </div>
@@ -203,7 +206,7 @@ function PlotLayout() {
               <h4 className='services-list'
                 onClick={() => {
                   setPlot(location.state.plots.filter((obj) => {
-                    if (obj.id == servicesId) {
+                    if (obj.id === servicesId) {
 
                       if (obj.services.house >= 1) {
                         return
@@ -222,7 +225,7 @@ function PlotLayout() {
               <h4 className='services-list'
                 onClick={() => {
                   setPlot(location.state.plots.filter((obj) => {
-                    if (obj.id == servicesId) {
+                    if (obj.id === servicesId) {
                       obj.services.restaurant = obj.services.restaurant + 1
                       setRestaurant([...restaurant, obj]);
                     }
@@ -233,7 +236,7 @@ function PlotLayout() {
               <h4 className='services-list'
                 onClick={() => {
                   setPlot(location.state.plots.filter((obj) => {
-                    if (obj.id == servicesId) {
+                    if (obj.id === servicesId) {
                       obj.services.gym = obj.services.gym + 1;
                       setGym([...gym, obj])
                     }
@@ -244,7 +247,7 @@ function PlotLayout() {
               <h4 className='services-list'
                 onClick={() => {
                   setPlot(location.state.plots.filter((obj) => {
-                    if (obj.id == servicesId) {
+                    if (obj.id === servicesId) {
                       obj.services.hospital = obj.services.hospital + 1
                       setHospital([...hospital, obj])
                     }
