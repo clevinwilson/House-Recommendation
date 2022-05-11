@@ -56,7 +56,7 @@ function PlotLayout() {
     </table>)
 
   }
- 
+
   const activeBox = () => {
     const activeBox = document.getElementById(preferredHouse[0].boxid);
     activeBox.style.borderColor = "#7af5ff";
@@ -64,80 +64,42 @@ function PlotLayout() {
     activeBox.style.boxShadow = " 0px 0px 14px #7af4fe";
   }
 
+  const selectHouse = (restaurantDistanceCol, preferredHouse, houses) => {
+    if (restaurantDistanceCol < distance) {
+      if (preferredHouse[0]) {
+        preferredHouse.filter((obj) => {
+          if (obj.houseid == houses.houseid) {
+            setDistance(restaurantDistanceCol);
+            console.log(restaurantDistanceCol);
+            obj.restaurantDistance = restaurantDistanceCol
+          } else {
+            setDistance(restaurantDistanceCol);
+            console.log(restaurantDistanceCol);
+            setPreferredHouse([{ houseid: houses.houseid, boxid: houses.id, restaurantDistance: restaurantDistanceCol }])
+          }
+          return (obj)
+        })
+      } else {
+        setDistance(restaurantDistanceCol);
+        console.log(restaurantDistanceCol);
+        setPreferredHouse([{ houseid: houses.houseid, boxid: houses.id, restaurantDistance: restaurantDistanceCol }])
+      }
+    }
+    return
+  }
 
   const findBestHouse = () => {
-
-
     house.forEach(houses => {
       restaurant.forEach(restaurants => {
         if (houses.row == restaurants.row) {
-          let restaurantDistanceCol = Math.abs(restaurants.col - houses.col);
-          if (restaurantDistanceCol < distance) {
-            if (preferredHouse[0]) {
-              preferredHouse.filter((obj) => {
-                if (obj.houseid == houses.houseid) {
-                  setDistance(restaurantDistanceCol);
-                  console.log(restaurantDistanceCol);
-                  obj.restaurantDistance = restaurantDistanceCol
-                } else {
-                  setDistance(restaurantDistanceCol);
-                  console.log(restaurantDistanceCol);
-                  setPreferredHouse([{ houseid: houses.houseid, boxid: houses.id, restaurantDistance: restaurantDistanceCol }])
-                }
-                return (obj)
-              })
-            } else {
-              setDistance(restaurantDistanceCol);
-              console.log(restaurantDistanceCol);
-              setPreferredHouse([{ houseid: houses.houseid, boxid: houses.id, restaurantDistance: restaurantDistanceCol }])
-            }
-          }
+          selectHouse(Math.abs(restaurants.col - houses.col),preferredHouse,houses)
         } else if (houses.col == restaurants.col) {
-          let restaurantDistanceRow = Math.abs(restaurants.row - houses.row);
-          if (restaurantDistanceRow < distance) {
-            if (preferredHouse[0]) {
-              preferredHouse.filter((obj) => {
-                if (obj.houseid == houses.houseid) {
-                  setDistance(restaurantDistanceRow);
-                  console.log(restaurantDistanceRow);
-                  obj.restaurantDistance = restaurantDistanceRow
-                } else {
-                  setDistance(restaurantDistanceRow);
-                  console.log(restaurantDistanceRow);
-                  setPreferredHouse([{ houseid: houses.houseid, boxid: houses.id, restaurantDistance: restaurantDistanceRow }])
-                }
-                return (obj)
-              })
-            } else {
-              setDistance(restaurantDistanceRow);
-              console.log(restaurantDistanceRow);
-              setPreferredHouse([{ houseid: houses.houseid, boxid: houses.id, restaurantDistance: restaurantDistanceRow }])
-            }
-          }
+          selectHouse(Math.abs(restaurants.row - houses.row), preferredHouse, houses)
         } else {
           let restaurantDistanceCol = Math.abs(restaurants.col - houses.col);
           let restaurantDistanceRow = Math.abs(restaurants.row - houses.row);
-          console.log(restaurantDistanceCol + restaurantDistanceRow);
-          if (restaurantDistanceCol + restaurantDistanceRow < distance) {
-            if (preferredHouse[0]) {
-              preferredHouse.filter((obj) => {
-                if (obj.houseid == houses.houseid) {
-                  setDistance(restaurantDistanceCol + restaurantDistanceRow);
-                  console.log(restaurantDistanceCol + restaurantDistanceRow);
-                  obj.restaurantDistance = restaurantDistanceCol + restaurantDistanceRow
-                } else {
-                  setDistance(restaurantDistanceCol + restaurantDistanceRow);
-                  console.log(restaurantDistanceCol + restaurantDistanceRow);
-                  setPreferredHouse([{ houseid: houses.houseid, boxid: houses.id, restaurantDistance: restaurantDistanceCol + restaurantDistanceRow }])
-                }
-                return (obj)
-              })
-            } else {
-              setDistance(restaurantDistanceCol + restaurantDistanceRow);
-              console.log(restaurantDistanceCol + restaurantDistanceRow);
-              setPreferredHouse([{ houseid: houses.houseid, boxid: houses.id, restaurantDistance: restaurantDistanceCol + restaurantDistanceRow }])
-            }
-          }
+          selectHouse(Math.abs(restaurantDistanceCol + restaurantDistanceRow), preferredHouse, houses)
+          
         }
       })
     });
@@ -159,7 +121,7 @@ function PlotLayout() {
       </section>
       <div className='container'>
         <div className='preferences-title text-center'>
-          <h3 style={{ fontSize: "3.1vmin" }} className='text-white'>Preferences</h3>
+          <h3 style={{ fontSize: "3.1vmin" }} className='text-white'>Set Preferences</h3>
         </div>
         <div style={{ fontSize: "2.2vmin" }} className='row text-center mt-5'>
           <div className="form-check col-6 mt-2 col-md-3">
@@ -207,41 +169,21 @@ function PlotLayout() {
             <div className='plot-container p-3'>
               <App />
 
-              {/* <table>
-                {
-                location.state.plots.map((obj)=>{
-                  return(
-                    
-                    
-                       <tbody>
-                      {obj.col == location.state.col ?
 
-                        <tr>{obj.id}</tr>
-
-                        :
-                        <td>{obj.id}</td>}
-                       </tbody>
-                    
-                   
-                    
-                  )
-                })
-              }
-              </table> */}
 
             </div>
             <div className='container mt-5'>
               <div className='row mt-3'>
                 <div className='col-6'>
-                  <button onClick={findBestHouse} className='btn btn-success find-btn ' >Calculate</button>
-                  
+                  <button style={{ width: '155px' }} onClick={findBestHouse} className='btn btn-success find-btn ' >Calculate Distance</button>
+
                 </div>
                 <div className='col-6'>
-                  <button onClick={activeBox} className='btn btn-success find-btn '>Find best house</button>
+                  <button style={{ width: '155px' }} onClick={activeBox} className='btn btn-success find-btn '>Find best house</button>
                 </div>
               </div>
             </div>
-          
+
           </div>
 
         </div>
